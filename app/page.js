@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="h-screen w-screen bg-white justify-center items-center text-black text-3xl flex">
+    <div className="flex h-screen w-screen animate-pulse items-center justify-center bg-white text-3xl text-black">
       Project AI
     </div>
   )
