@@ -1,18 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
 export default function SignIn() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const error = searchParams.get('error');
+    if (error) {
+      const errorMessages = {
+        DatabaseError: 'Database connection error. Please try again.',
+        AccountDeactivated: 'Your account has been deactivated.',
+        OAuthAccountNotLinked: 'This email is already registered. Please sign in using your original method.',
+        AccessDenied: 'Access denied. Please contact support if this persists.',
+        Configuration: 'Server configuration error. Please contact support.',
+        Verification: 'Verification failed. Please try again.',
+      };
+      toast.error(errorMessages[error] || 'An authentication error occurred.');
+    }
+  }, [searchParams]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,16 +67,19 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-xl p-8 shadow-lg border border-gray-200">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Welcome Back</h1>
-          <p className="text-gray-300">Sign in to your account</p>
+          <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <span className="text-white font-bold text-2xl">C</span>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
+          <p className="text-gray-600">Sign in to your account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
               Email
             </label>
             <input
@@ -70,13 +89,13 @@ export default function SignIn() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-200 mb-2">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
               Password
             </label>
             <input
@@ -86,7 +105,7 @@ export default function SignIn() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="••••••••"
             />
           </div>
@@ -103,16 +122,16 @@ export default function SignIn() {
         <div className="mt-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/20"></div>
+              <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-transparent text-gray-300">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">Or continue with</span>
             </div>
           </div>
 
           <button
             onClick={handleGoogleSignIn}
-            className="mt-4 w-full flex items-center justify-center gap-3 py-3 bg-white text-gray-800 rounded-lg font-semibold hover:bg-gray-100 transition"
+            className="mt-4 w-full flex items-center justify-center gap-3 py-3 bg-white text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition border border-gray-300"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -136,15 +155,15 @@ export default function SignIn() {
           </button>
         </div>
 
-        <p className="mt-6 text-center text-gray-300">
-          Don't have an account?{' '}
-          <Link href="/auth/signup" className="text-blue-400 hover:text-blue-300 font-semibold">
+        <p className="mt-6 text-center text-gray-600">
+          Don&apos;t have an account?{' '}
+          <Link href="/auth/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
             Sign up
           </Link>
         </p>
 
         <p className="mt-4 text-center">
-          <Link href="/" className="text-gray-400 hover:text-gray-300 text-sm">
+          <Link href="/" className="text-gray-500 hover:text-gray-700 text-sm">
             ← Back to Home
           </Link>
         </p>

@@ -1,4 +1,4 @@
-# 🎉 ComplainHub - Project Complete!
+# 🎉 Civic-AI - Project Complete!
 
 ## ✅ What Has Been Built
 

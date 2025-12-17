@@ -1,8 +1,8 @@
-# ComplainHub - Complete Setup Guide
+# Civic-AI - Complete Setup Guide
 
 ## 🚀 Quick Start Guide
 
-Follow these steps to get your ComplainHub platform up and running!
+Follow these steps to get your Civic-AI platform up and running!
 
 ## Prerequisites
 
@@ -65,19 +65,19 @@ This installs:
 1. **Create Project**
    - Go to https://console.cloud.google.com/
    - Click "Select a project" → "New Project"
-   - Name it "ComplainHub" → Create
+   - Name it "Civic-AI" → Create
 
 2. **Configure OAuth Consent Screen**
    - Go to "APIs & Services" → "OAuth consent screen"
    - Choose "External" → Create
-   - Fill in app name: "ComplainHub"
+   - Fill in app name: "Civic-AI"
    - Add your email as support email
    - Save and Continue
 
 3. **Create OAuth Credentials**
    - Go to "Credentials" → "Create Credentials" → "OAuth client ID"
    - Choose "Web application"
-   - Name: "ComplainHub Web"
+   - Name: "Civic-AI Web"
    - Authorized redirect URIs:
      - `http://localhost:3000/api/auth/callback/google`
      - For production, add your domain
@@ -105,7 +105,7 @@ Create `.env.local` in the root directory:
 
 ```env
 # MongoDB Atlas
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/complainhub?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/Civic-AI?retryWrites=true&w=majority
 
 # NextAuth
 NEXTAUTH_URL=http://localhost:3000
@@ -259,7 +259,7 @@ npm start
 
 ## 🎉 You're All Set!
 
-Your ComplainHub platform is now ready. Start filing complaints and watch the AI magic happen!
+Your Civic-AI platform is now ready. Start filing complaints and watch the AI magic happen!
 
 For issues or questions, check the main README.md or create an issue on GitHub.
 

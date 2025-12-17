@@ -1,6 +1,6 @@
-# ✅ Quick Start Checklist - ComplainHub
+# ✅ Quick Start Checklist - Civic-AI
 
-Follow this checklist to get your ComplainHub platform running!
+Follow this checklist to get your Civic-AI platform running!
 
 ## 📋 Pre-Setup Checklist
 
@@ -193,7 +193,7 @@ Follow this checklist to get your ComplainHub platform running!
 ## 🎯 Ready to Use?
 
 Once all checkmarks are complete:
-- ✅ Your ComplainHub platform is fully functional
+- ✅ Your Civic-AI platform is fully functional
 - ✅ You can start filing and managing complaints
 - ✅ AI categorization is working
 - ✅ Real-time tracking is active

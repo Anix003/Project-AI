@@ -60,38 +60,65 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      if (account.provider === 'google') {
-        await connectDB();
+      if (account?.provider === 'google') {
+        try {
+          await connectDB();
 
-        const existingUser = await User.findOne({ email: user.email });
+          const existingUser = await User.findOne({ email: user.email });
 
-        if (existingUser) {
-          // Update Google ID if not set
-          if (!existingUser.googleId && account.providerAccountId) {
-            existingUser.googleId = account.providerAccountId;
-            await existingUser.save();
+          if (existingUser) {
+            // Check if user is active
+            if (!existingUser.isActive) {
+              console.error('User account is deactivated');
+              return '/auth/signin?error=AccountDeactivated';
+            }
+            
+            // Update Google ID if not set
+            if (!existingUser.googleId && account.providerAccountId) {
+              existingUser.googleId = account.providerAccountId;
+              await existingUser.save();
+            }
+            return true;
           }
-          return true;
-        }
 
-        // Create new user
-        await User.create({
-          name: user.name,
-          email: user.email,
-          googleId: account.providerAccountId,
-          profileImage: user.image,
-          isVerified: true,
-          role: 'user',
-        });
+          // Create new user
+          await User.create({
+            name: user.name,
+            email: user.email,
+            googleId: account.providerAccountId,
+            profileImage: user.image,
+            isVerified: true,
+            isActive: true,
+            role: 'user',
+          });
+
+          return true;
+        } catch (error) {
+          console.error('Google Sign In Error:', error);
+          // Instead of returning false (which causes AccessDenied),
+          // redirect to signin with error message
+          return '/auth/signin?error=DatabaseError';
+        }
       }
 
       return true;
     },
-    async jwt({ token, user, trigger, session }) {
+    async jwt({ token, user, trigger, session, account }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
         token.department = user.department;
+      }
+
+      // For Google OAuth, fetch user from DB to get MongoDB _id
+      if (account?.provider === 'google' && token.email) {
+        await connectDB();
+        const dbUser = await User.findOne({ email: token.email });
+        if (dbUser) {
+          token.id = dbUser._id.toString();
+          token.role = dbUser.role;
+          token.department = dbUser.department;
+        }
       }
 
       // Handle session update

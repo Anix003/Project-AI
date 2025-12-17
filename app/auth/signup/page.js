@@ -105,17 +105,20 @@ export default function SignUp() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center px-4 py-12">
-      <div className="max-w-2xl w-full bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+      <div className="max-w-2xl w-full bg-white rounded-xl p-8 shadow-lg border border-gray-200">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Create Account</h1>
-          <p className="text-gray-300">Join ComplainHub today</p>
+          <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <span className="text-white font-bold text-2xl">C</span>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
+          <p className="text-gray-600">Join Civic-AI today</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-200 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name
               </label>
               <input
@@ -125,13 +128,13 @@ export default function SignUp() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email
               </label>
               <input
@@ -141,7 +144,7 @@ export default function SignUp() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="you@example.com"
               />
             </div>
@@ -149,7 +152,7 @@ export default function SignUp() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-200 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
               <input
@@ -159,13 +162,13 @@ export default function SignUp() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="••••••••"
               />
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200 mb-2">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
                 Confirm Password
               </label>
               <input
@@ -175,7 +178,7 @@ export default function SignUp() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="••••••••"
               />
             </div>
@@ -183,7 +186,7 @@ export default function SignUp() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="role" className="block text-sm font-medium text-gray-200 mb-2">
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">
                 Role
               </label>
               <select
@@ -191,17 +194,17 @@ export default function SignUp() {
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
-                <option value="user" className="bg-gray-800">User</option>
-                <option value="department" className="bg-gray-800">Department</option>
-                <option value="authority" className="bg-gray-800">Authority</option>
-                <option value="developer" className="bg-gray-800">Developer</option>
+                <option value="user">User</option>
+                <option value="department">Department</option>
+                <option value="authority">Authority</option>
+                <option value="developer">Developer</option>
               </select>
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-200 mb-2">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                 Phone (Optional)
               </label>
               <input
@@ -210,7 +213,7 @@ export default function SignUp() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="+1234567890"
               />
             </div>
@@ -218,7 +221,7 @@ export default function SignUp() {
 
           {formData.role === 'department' && (
             <div>
-              <label htmlFor="department" className="block text-sm font-medium text-gray-200 mb-2">
+              <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-2">
                 Department
               </label>
               <select
@@ -227,11 +230,11 @@ export default function SignUp() {
                 value={formData.department}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
-                <option value="" className="bg-gray-800">Select Department</option>
+                <option value="">Select Department</option>
                 {departments.map((dept) => (
-                  <option key={dept} value={dept} className="bg-gray-800">
+                  <option key={dept} value={dept}>
                     {dept}
                   </option>
                 ))}
@@ -251,16 +254,16 @@ export default function SignUp() {
         <div className="mt-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/20"></div>
+              <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-transparent text-gray-300">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">Or continue with</span>
             </div>
           </div>
 
           <button
             onClick={handleGoogleSignUp}
-            className="mt-4 w-full flex items-center justify-center gap-3 py-3 bg-white text-gray-800 rounded-lg font-semibold hover:bg-gray-100 transition"
+            className="mt-4 w-full flex items-center justify-center gap-3 py-3 bg-white text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition border border-gray-300"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -284,15 +287,15 @@ export default function SignUp() {
           </button>
         </div>
 
-        <p className="mt-6 text-center text-gray-300">
+        <p className="mt-6 text-center text-gray-600">
           Already have an account?{' '}
-          <Link href="/auth/signin" className="text-blue-400 hover:text-blue-300 font-semibold">
+          <Link href="/auth/signin" className="text-blue-600 hover:text-blue-700 font-semibold">
             Sign in
           </Link>
         </p>
 
         <p className="mt-4 text-center">
-          <Link href="/" className="text-gray-400 hover:text-gray-300 text-sm">
+          <Link href="/" className="text-gray-500 hover:text-gray-700 text-sm">
             ← Back to Home
           </Link>
         </p>

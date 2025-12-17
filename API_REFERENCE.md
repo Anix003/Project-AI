@@ -1,6 +1,6 @@
-# API Reference - ComplainHub
+# API Reference - Civic-AI
 
-Complete API documentation for all endpoints in the ComplainHub platform.
+Complete API documentation for all endpoints in the Civic-AI platform.
 
 ## Base URL
 ```

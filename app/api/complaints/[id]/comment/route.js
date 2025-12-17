@@ -6,6 +6,9 @@ import Complaint from '@/models/Complaint';
 
 export async function POST(req, { params }) {
   try {
+    // In Next.js 15, params is a Promise
+    const { id } = await params;
+    
     const session = await getServerSession(authOptions);
 
     if (!session) {
@@ -20,7 +23,7 @@ export async function POST(req, { params }) {
 
     await connectDB();
 
-    const complaint = await Complaint.findById(params.id);
+    const complaint = await Complaint.findById(id);
 
     if (!complaint) {
       return NextResponse.json({ error: 'Complaint not found' }, { status: 404 });

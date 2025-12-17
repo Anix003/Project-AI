@@ -23,11 +23,19 @@ export async function POST(req) {
 
     await connectDB();
 
-    // Determine priority from AI analysis or set default
-    const priority = aiAnalysis?.priority || 'medium';
+    // Find the actual user document to get MongoDB _id
+    const User = (await import('@/models/User')).default;
+    const user = await User.findOne({ email: session.user.email });
+    
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    // Determine priority from AI analysis or set default (ensure lowercase)
+    const priority = (aiAnalysis?.priority || 'medium').toLowerCase();
 
     const complaint = await Complaint.create({
-      userId: session.user.id,
+      userId: user._id,
       title,
       description,
       location: location || '',

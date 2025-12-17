@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata = {
-  title: 'ComplainHub - AI-Powered Complaint Management',
+  title: 'Civic-AI - AI-Powered Complaint Management',
   description: 'File, track, and resolve complaints with AI-powered categorization and real-time updates',
 }
 

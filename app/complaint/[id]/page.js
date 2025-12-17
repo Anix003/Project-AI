@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
 import useSWR from 'swr';
 import toast from 'react-hot-toast';
+import { Calendar, User, Bot, MessageCircle } from 'lucide-react';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -32,15 +33,15 @@ export default function ComplaintDetail() {
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending':
-        return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/50';
+        return 'bg-yellow-100 text-yellow-700 border-yellow-200';
       case 'in-progress':
-        return 'bg-blue-500/20 text-blue-300 border-blue-500/50';
+        return 'bg-blue-100 text-blue-700 border-blue-200';
       case 'resolved':
-        return 'bg-green-500/20 text-green-300 border-green-500/50';
+        return 'bg-green-100 text-green-700 border-green-200';
       case 'rejected':
-        return 'bg-red-500/20 text-red-300 border-red-500/50';
+        return 'bg-red-100 text-red-700 border-red-200';
       default:
-        return 'bg-gray-500/20 text-gray-300 border-gray-500/50';
+        return 'bg-gray-100 text-gray-700 border-gray-200';
     }
   };
 
@@ -70,20 +71,20 @@ export default function ComplaintDetail() {
 
   if (status === 'loading' || !complaint) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-2xl">Loading...</div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-gray-900 text-2xl font-semibold">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
-      <nav className="bg-black/20 backdrop-blur-lg border-b border-white/10">
+    <div className="min-h-screen bg-gray-50">
+      <nav className="bg-white border-b border-gray-200 shadow-sm">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-white">Complaint Details</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Complaint Details</h1>
           <button
             onClick={() => router.push('/dashboard')}
-            className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition"
+            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition border border-gray-300"
           >
             ← Back to Dashboard
           </button>
@@ -93,49 +94,49 @@ export default function ComplaintDetail() {
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-5xl mx-auto space-y-6">
           {/* Main Complaint Card */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 border border-white/20">
+          <div className="bg-white rounded-lg p-8 border border-gray-200 shadow-sm">
             <div className="flex justify-between items-start mb-6">
               <div className="flex-1">
-                <h2 className="text-3xl font-bold text-white mb-2">{complaint.title}</h2>
-                <div className="flex gap-4 text-sm text-gray-400 mb-4">
-                  <span>📅 {new Date(complaint.createdAt).toLocaleString()}</span>
-                  <span>👤 {complaint.userId?.name || 'Anonymous'}</span>
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">{complaint.title}</h2>
+                <div className="flex gap-4 text-sm text-gray-500 mb-4">
+                  <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> {new Date(complaint.createdAt).toLocaleString()}</span>
+                  <span className="flex items-center gap-1"><User className="w-4 h-4" /> {complaint.userId?.name || 'Anonymous'}</span>
                 </div>
               </div>
               <span className={`px-4 py-2 rounded-full text-sm font-semibold border ${getStatusColor(complaint.status)}`}>
-                {complaint.status.toUpperCase()}
+                {complaint.status?.toUpperCase() || 'PENDING'}
               </span>
             </div>
 
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-white mb-2">Description</h3>
-                <p className="text-gray-300">{complaint.description}</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+                <p className="text-gray-700">{complaint.description}</p>
               </div>
 
               {complaint.location && (
                 <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Location</h3>
-                  <p className="text-gray-300">📍 {complaint.location}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Location</h3>
+                  <p className="text-gray-700">📍 {complaint.location}</p>
                 </div>
               )}
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
-                <div className="bg-white/5 p-4 rounded-lg">
-                  <p className="text-gray-400 text-sm">Category</p>
-                  <p className="text-white font-semibold">{complaint.category}</p>
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <p className="text-gray-500 text-sm">Category</p>
+                  <p className="text-gray-900 font-semibold">{complaint.category}</p>
                 </div>
-                <div className="bg-white/5 p-4 rounded-lg">
-                  <p className="text-gray-400 text-sm">Department</p>
-                  <p className="text-white font-semibold">{complaint.department}</p>
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <p className="text-gray-500 text-sm">Department</p>
+                  <p className="text-gray-900 font-semibold">{complaint.department}</p>
                 </div>
-                <div className="bg-white/5 p-4 rounded-lg">
-                  <p className="text-gray-400 text-sm">Priority</p>
-                  <p className="text-white font-semibold capitalize">{complaint.priority}</p>
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <p className="text-gray-500 text-sm">Priority</p>
+                  <p className="text-gray-900 font-semibold capitalize">{complaint.priority}</p>
                 </div>
-                <div className="bg-white/5 p-4 rounded-lg">
-                  <p className="text-gray-400 text-sm">Complaint ID</p>
-                  <p className="text-white font-semibold text-xs">{complaint._id.slice(-8)}</p>
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <p className="text-gray-500 text-sm">Complaint ID</p>
+                  <p className="text-gray-900 font-semibold text-xs">{complaint._id?.slice(-8) || 'N/A'}</p>
                 </div>
               </div>
             </div>
@@ -143,23 +144,23 @@ export default function ComplaintDetail() {
 
           {/* AI Analysis */}
           {complaint.aiAnalysis && complaint.aiAnalysis.confidence && (
-            <div className="bg-purple-500/10 backdrop-blur-lg rounded-xl p-6 border border-purple-500/30">
-              <h3 className="text-xl font-semibold text-white mb-4">🤖 AI Analysis</h3>
+            <div className="bg-purple-50 rounded-lg p-6 border border-purple-200">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2"><Bot className="w-5 h-5" /> AI Analysis</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-400">Sentiment:</span>
-                  <span className="ml-2 text-white capitalize">{complaint.aiAnalysis.sentiment}</span>
+                  <span className="text-gray-500">Sentiment:</span>
+                  <span className="ml-2 text-gray-900 font-medium capitalize">{complaint.aiAnalysis.sentiment}</span>
                 </div>
                 <div>
-                  <span className="text-gray-400">Confidence:</span>
-                  <span className="ml-2 text-white">{(complaint.aiAnalysis.confidence * 100).toFixed(0)}%</span>
+                  <span className="text-gray-500">Confidence:</span>
+                  <span className="ml-2 text-gray-900 font-medium">{(complaint.aiAnalysis.confidence * 100).toFixed(0)}%</span>
                 </div>
                 {complaint.aiAnalysis.keywords && complaint.aiAnalysis.keywords.length > 0 && (
                   <div className="col-span-2">
-                    <span className="text-gray-400">Keywords:</span>
+                    <span className="text-gray-500">Keywords:</span>
                     <div className="flex gap-2 mt-2 flex-wrap">
                       {complaint.aiAnalysis.keywords.map((keyword, index) => (
-                        <span key={index} className="px-2 py-1 bg-purple-500/20 text-purple-300 rounded text-xs">
+                        <span key={index} className="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs font-medium border border-purple-200">
                           {keyword}
                         </span>
                       ))}
@@ -172,15 +173,15 @@ export default function ComplaintDetail() {
 
           {/* Updates Timeline */}
           {complaint.updates && complaint.updates.length > 0 && (
-            <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20">
-              <h3 className="text-xl font-semibold text-white mb-4">📋 Updates</h3>
+            <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">📋 Updates</h3>
               <div className="space-y-4">
                 {complaint.updates.map((update, index) => (
                   <div key={index} className="flex gap-4 items-start">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
                     <div className="flex-1">
-                      <p className="text-white">{update.message}</p>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-gray-900">{update.message}</p>
+                      <p className="text-sm text-gray-500">
                         {new Date(update.timestamp).toLocaleString()}
                       </p>
                     </div>
@@ -191,15 +192,15 @@ export default function ComplaintDetail() {
           )}
 
           {/* Comments Section */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20">
-            <h3 className="text-xl font-semibold text-white mb-4">💬 Comments</h3>
+          <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2"><MessageCircle className="w-5 h-5" /> Comments</h3>
             
             {complaint.comments && complaint.comments.length > 0 && (
               <div className="space-y-4 mb-6">
                 {complaint.comments.map((comment, index) => (
-                  <div key={index} className="bg-white/5 p-4 rounded-lg">
-                    <p className="text-white mb-2">{comment.text}</p>
-                    <p className="text-sm text-gray-400">
+                  <div key={index} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <p className="text-gray-900 mb-2">{comment.text}</p>
+                    <p className="text-sm text-gray-500">
                       {comment.author?.name || 'Anonymous'} • {new Date(comment.timestamp).toLocaleString()}
                     </p>
                   </div>
@@ -213,12 +214,12 @@ export default function ComplaintDetail() {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Add a comment..."
-                className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
                 type="submit"
                 disabled={loading || !comment.trim()}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50 shadow-sm"
               >
                 {loading ? 'Sending...' : 'Send'}
               </button>
