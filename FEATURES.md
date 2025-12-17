@@ -1,4 +1,4 @@
-# ComplainHub - Features Documentation
+# Civic-AI - Features Documentation
 
 ## 🎨 User Interface Features
 
@@ -415,4 +415,4 @@ Rejected ← ← ← ← ← ← ← Closed
 
 ---
 
-This documentation covers all major features of ComplainHub. For technical implementation details, see the code comments and setup guide.
+This documentation covers all major features of Civic-AI. For technical implementation details, see the code comments and setup guide.

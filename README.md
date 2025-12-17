@@ -1,4 +1,4 @@
-# ComplainHub - AI-Powered Complaint Management Platform
+# Civic-AI - AI-Powered Complaint Management Platform
 
 A comprehensive, modern complaint categorization and management platform built with Next.js 15, featuring AI-powered categorization, real-time tracking, and role-based dashboards.
 

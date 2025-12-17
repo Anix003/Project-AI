@@ -1,96 +1,43 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const { data: session } = useSession();
   const router = useRouter();
-  const heroRef = useRef(null);
-  const featuresRef = useRef(null);
-  const statsRef = useRef(null);
 
   useEffect(() => {
-    // Hero animation
-    const ctx = gsap.context(() => {
-      gsap.from('.hero-title', {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: 'power3.out',
-      });
-
-      gsap.from('.hero-subtitle', {
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 0.3,
-        ease: 'power3.out',
-      });
-
-      gsap.from('.hero-buttons', {
-        opacity: 0,
-        y: 20,
-        duration: 1,
-        delay: 0.6,
-        ease: 'power3.out',
-      });
-
-      // Features animation
-      gsap.from('.feature-card', {
-        scrollTrigger: {
-          trigger: featuresRef.current,
-          start: 'top 80%',
-        },
-        opacity: 0,
-        y: 50,
-        stagger: 0.2,
-        duration: 0.8,
-        ease: 'power3.out',
-      });
-
-      // Stats animation
-      gsap.from('.stat-item', {
-        scrollTrigger: {
-          trigger: statsRef.current,
-          start: 'top 80%',
-        },
-        opacity: 0,
-        scale: 0.8,
-        stagger: 0.15,
-        duration: 0.6,
-        ease: 'back.out(1.7)',
-      });
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
+    if (session) {
+      router.push('/dashboard');
+    }
+  }, [session, router]);
 
   if (session) {
-    router.push('/dashboard');
     return null;
   }
 
   return (
-    <div ref={heroRef} className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+    <div className="min-h-screen bg-gray-50">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-black/20 backdrop-blur-lg z-50 border-b border-white/10">
+      <nav className="bg-white border-b border-gray-200 shadow-sm">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-white">ComplainHub</h1>
-          <div className="flex gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">C</span>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900">Civic-AI</h1>
+          </div>
+          <div className="flex gap-3">
             <Link href="/auth/signin">
-              <button className="px-6 py-2 text-white hover:text-blue-300 transition">
+              <button className="px-6 py-2 text-gray-700 hover:text-blue-600 font-medium transition">
                 Sign In
               </button>
             </Link>
             <Link href="/auth/signup">
-              <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+              <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition shadow-sm">
                 Get Started
               </button>
             </Link>
@@ -99,117 +46,128 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-6 pt-32 pb-20">
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="hero-title text-6xl md:text-7xl font-bold text-white mb-6">
-            Your Voice, <span className="text-blue-400">Amplified</span>
-          </h1>
-          <p className="hero-subtitle text-xl md:text-2xl text-gray-300 mb-10">
-            AI-powered complaint management system that ensures your concerns reach the right department instantly.
-          </p>
-          <div className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/auth/signup">
-              <button className="px-8 py-4 bg-blue-600 text-white text-lg rounded-lg hover:bg-blue-700 transition transform hover:scale-105">
-                File a Complaint
-              </button>
-            </Link>
-            <Link href="/track">
-              <button className="px-8 py-4 bg-white/10 text-white text-lg rounded-lg hover:bg-white/20 transition backdrop-blur">
-                Track Complaint
-              </button>
-            </Link>
+      <section className="bg-white py-20 md:py-32">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Professional Complaint Management System
+            </h1>
+            <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+              Streamline complaint resolution with AI-powered categorization, real-time tracking, and efficient department routing.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/auth/signup">
+                <button className="px-8 py-4 bg-blue-600 text-white text-lg font-medium rounded-lg hover:bg-blue-700 transition shadow-md">
+                  Get Started
+                </button>
+              </Link>
+              <Link href="/auth/signin">
+                <button className="px-8 py-4 bg-white text-gray-700 text-lg font-medium rounded-lg hover:bg-gray-50 transition border-2 border-gray-300">
+                  View Demo
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section ref={statsRef} className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {[
-            { number: '10K+', label: 'Complaints Resolved' },
-            { number: '15+', label: 'Departments' },
-            { number: '98%', label: 'Satisfaction Rate' },
-            { number: '24/7', label: 'Support' },
-          ].map((stat, index) => (
-            <div key={index} className="stat-item text-center p-6 bg-white/10 backdrop-blur rounded-xl">
-              <h3 className="text-4xl font-bold text-blue-400 mb-2">{stat.number}</h3>
-              <p className="text-gray-300">{stat.label}</p>
-            </div>
-          ))}
+      <section className="bg-gray-100 py-16">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { number: '10,000+', label: 'Complaints Resolved' },
+              { number: '15+', label: 'Departments' },
+              { number: '98%', label: 'Satisfaction Rate' },
+              { number: '24/7', label: 'Support Available' },
+            ].map((stat, index) => (
+              <div key={index} className="text-center">
+                <h3 className="text-4xl font-bold text-blue-600 mb-2">{stat.number}</h3>
+                <p className="text-gray-600 font-medium">{stat.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section ref={featuresRef} className="container mx-auto px-6 py-20">
-        <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-16">
-          Why Choose ComplainHub?
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            {
-              icon: '🤖',
-              title: 'AI-Powered Categorization',
-              description: 'Our advanced AI automatically categorizes and routes your complaint to the right department.',
-            },
-            {
-              icon: '⚡',
-              title: 'Real-Time Tracking',
-              description: 'Track your complaint status in real-time with instant notifications and updates.',
-            },
-            {
-              icon: '🎯',
-              title: 'Smart Suggestions',
-              description: 'Get intelligent suggestions while filing complaints for better clarity and faster resolution.',
-            },
-            {
-              icon: '🔒',
-              title: 'Secure & Private',
-              description: 'Your data is encrypted and secure. We prioritize your privacy above everything.',
-            },
-            {
-              icon: '📊',
-              title: 'Analytics Dashboard',
-              description: 'Comprehensive dashboards for users, departments, and authorities to monitor progress.',
-            },
-            {
-              icon: '🚀',
-              title: 'Fast Resolution',
-              description: 'Streamlined workflow ensures faster complaint resolution and better communication.',
-            },
-          ].map((feature, index) => (
-            <div
-              key={index}
-              className="feature-card p-8 bg-white/5 backdrop-blur rounded-xl border border-white/10 hover:bg-white/10 transition"
-            >
-              <div className="text-5xl mb-4">{feature.icon}</div>
-              <h3 className="text-2xl font-bold text-white mb-3">{feature.title}</h3>
-              <p className="text-gray-300">{feature.description}</p>
-            </div>
-          ))}
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Why Choose Civic-AI
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Enterprise-grade features designed for efficient complaint management
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                icon: '🤖',
+                title: 'AI-Powered Categorization',
+                description: 'Automatic complaint categorization and routing to the appropriate department using advanced AI.',
+              },
+              {
+                icon: '⚡',
+                title: 'Real-Time Tracking',
+                description: 'Monitor complaint status with live updates and instant notifications throughout the resolution process.',
+              },
+              {
+                icon: '🎯',
+                title: 'Smart Suggestions',
+                description: 'Intelligent recommendations while filing complaints for clarity and faster resolution.',
+              },
+              {
+                icon: '🔒',
+                title: 'Secure & Private',
+                description: 'Enterprise-level security with encrypted data storage and strict privacy controls.',
+              },
+              {
+                icon: '📊',
+                title: 'Analytics Dashboard',
+                description: 'Comprehensive dashboards with insights, trends, and performance metrics.',
+              },
+              {
+                icon: '🚀',
+                title: 'Fast Resolution',
+                description: 'Streamlined workflows and automated routing ensure quick complaint resolution.',
+              },
+            ].map((feature, index) => (
+              <div
+                key={index}
+                className="p-8 bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition"
+              >
+                <div className="text-4xl mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-6 py-20">
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-center">
+      <section className="bg-blue-600 py-20">
+        <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Ready to Make Your Voice Heard?
+            Ready to Get Started?
           </h2>
-          <p className="text-xl text-gray-200 mb-8">
-            Join thousands of citizens making a difference in their community.
+          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            Join organizations using Civic-AI to streamline their complaint management process.
           </p>
           <Link href="/auth/signup">
-            <button className="px-10 py-4 bg-white text-blue-600 text-lg font-semibold rounded-lg hover:bg-gray-100 transition transform hover:scale-105">
-              Get Started Now
+            <button className="px-10 py-4 bg-white text-blue-600 text-lg font-semibold rounded-lg hover:bg-gray-50 transition shadow-lg">
+              Create Free Account
             </button>
           </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-8">
-        <div className="container mx-auto px-6 text-center text-gray-400">
-          <p>&copy; 2025 ComplainHub. All rights reserved.</p>
+      <footer className="bg-white border-t border-gray-200 py-8">
+        <div className="container mx-auto px-6 text-center text-gray-600">
+          <p>&copy; 2025 Civic-AI. All rights reserved.</p>
         </div>
       </footer>
     </div>
