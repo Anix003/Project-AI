@@ -1,49 +1,46 @@
-'use client';
+'use client'
 
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import UserDashboard from '@/components/sections/dashboards/UserDashboard';
-import DepartmentDashboard from '@/components/sections/dashboards/DepartmentDashboard';
-import AuthorityDashboard from '@/components/sections/dashboards/AuthorityDashboard';
-import DeveloperDashboard from '@/components/sections/dashboards/DeveloperDashboard';
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import UserDashboard from '@/components/sections/dashboards/UserDashboard'
+import DepartmentDashboard from '@/components/sections/dashboards/DepartmentDashboard'
+import AuthorityDashboard from '@/components/sections/dashboards/AuthorityDashboard'
+import DeveloperDashboard from '@/components/sections/dashboards/DeveloperDashboard'
+import { FullPageLoader } from '@/components/ui/loading-spinner'
 
 export default function Dashboard() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  const { data: session, status } = useSession()
+  const router = useRouter()
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/auth/signin');
+      router.push('/auth/signin')
     }
-  }, [status, router]);
+  }, [status, router])
 
   if (status === 'loading') {
-    return (
-      <div className="min-h-screen bg-linear-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-2xl">Loading...</div>
-      </div>
-    );
+    return <FullPageLoader />
   }
 
   if (!session) {
-    return null;
+    return null
   }
 
   const renderDashboard = () => {
     switch (session.user.role) {
       case 'user':
-        return <UserDashboard session={session} />;
+        return <UserDashboard session={session} />
       case 'department':
-        return <DepartmentDashboard session={session} />;
+        return <DepartmentDashboard session={session} />
       case 'authority':
-        return <AuthorityDashboard session={session} />;
+        return <AuthorityDashboard session={session} />
       case 'developer':
-        return <DeveloperDashboard session={session} />;
+        return <DeveloperDashboard session={session} />
       default:
-        return <UserDashboard session={session} />;
+        return <UserDashboard session={session} />
     }
-  };
+  }
 
-  return renderDashboard();
+  return renderDashboard()
 }

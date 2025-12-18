@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: 'Civic-AI - AI-Powered Complaint Management',
-  description: 'File, track, and resolve complaints with AI-powered categorization and real-time updates',
+  description:
+    'File, track, and resolve complaints with AI-powered categorization and real-time updates',
 }
 
 export default function RootLayout({ children }) {
@@ -24,13 +25,41 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
           {children}
-          <Toaster 
+          <Toaster
             position="top-right"
             toastOptions={{
               duration: 4000,
               style: {
-                background: '#363636',
+                background: '#1f2937',
                 color: '#fff',
+                borderRadius: '12px',
+                padding: '16px',
+                fontSize: '14px',
+                fontWeight: '500',
+                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
+              },
+              success: {
+                style: {
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                },
+                iconTheme: {
+                  primary: '#fff',
+                  secondary: '#10b981',
+                },
+              },
+              error: {
+                style: {
+                  background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                },
+                iconTheme: {
+                  primary: '#fff',
+                  secondary: '#ef4444',
+                },
+              },
+              loading: {
+                style: {
+                  background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                },
               },
             }}
           />
