@@ -1,6 +1,6 @@
-# General Setup - Next.js
+# Civic-AI - AI-Powered Complaint Management Platform
 
-A well-structured Next.js project template with organized folder structure for scalable application development.
+A comprehensive, modern complaint categorization and management platform built with Next.js 15, featuring AI-powered categorization, real-time tracking, and role-based dashboards.
 
 ## 📁 Project Structure
 
@@ -76,6 +76,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 ## 📝 Code Quality
 
 This project includes:
+
 - ESLint for code linting
 - Prettier for code formatting
 - Husky for git hooks
