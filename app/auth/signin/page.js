@@ -1,85 +1,69 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import toast from 'react-hot-toast';
+import { useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import toast from 'react-hot-toast'
 
 export default function SignIn() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-  });
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const error = searchParams.get('error');
-    if (error) {
-      const errorMessages = {
-        DatabaseError: 'Database connection error. Please try again.',
-        AccountDeactivated: 'Your account has been deactivated.',
-        OAuthAccountNotLinked: 'This email is already registered. Please sign in using your original method.',
-        AccessDenied: 'Access denied. Please contact support if this persists.',
-        Configuration: 'Server configuration error. Please contact support.',
-        Verification: 'Verification failed. Please try again.',
-      };
-      toast.error(errorMessages[error] || 'An authentication error occurred.');
-    }
-  }, [searchParams]);
+  })
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault()
+    setLoading(true)
 
     try {
       const result = await signIn('credentials', {
         redirect: false,
         email: formData.email,
         password: formData.password,
-      });
+      })
 
       if (result?.error) {
-        toast.error(result.error);
+        toast.error(result.error)
       } else {
-        toast.success('Signed in successfully!');
-        router.push('/dashboard');
+        toast.success('Signed in successfully!')
+        router.push('/dashboard')
       }
     } catch (error) {
-      toast.error('An error occurred. Please try again.');
+      toast.error('An error occurred. Please try again.')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleGoogleSignIn = async () => {
     try {
-      await signIn('google', { callbackUrl: '/dashboard' });
+      await signIn('google', { callbackUrl: '/dashboard' })
     } catch (error) {
-      toast.error('Failed to sign in with Google');
+      toast.error('Failed to sign in with Google')
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-xl p-8 shadow-lg border border-gray-200">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold text-2xl">C</span>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+      <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 shadow-lg">
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-blue-600">
+            <span className="text-2xl font-bold text-white">C</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
+          <h1 className="mb-2 text-3xl font-bold text-gray-900">Welcome Back</h1>
           <p className="text-gray-600">Sign in to your account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-700">
               Email
             </label>
             <input
@@ -89,13 +73,13 @@ export default function SignIn() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-700">
               Password
             </label>
             <input
@@ -105,7 +89,7 @@ export default function SignIn() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="••••••••"
             />
           </div>
@@ -113,7 +97,7 @@ export default function SignIn() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
@@ -125,15 +109,15 @@ export default function SignIn() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="bg-white px-2 text-gray-500">Or continue with</span>
             </div>
           </div>
 
           <button
             onClick={handleGoogleSignIn}
-            className="mt-4 w-full flex items-center justify-center gap-3 py-3 bg-white text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition border border-gray-300"
+            className="mt-4 flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3 font-medium text-gray-700 transition hover:bg-gray-50"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <svg className="h-5 w-5" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -157,17 +141,17 @@ export default function SignIn() {
 
         <p className="mt-6 text-center text-gray-600">
           Don&apos;t have an account?{' '}
-          <Link href="/auth/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
+          <Link href="/auth/signup" className="font-semibold text-blue-600 hover:text-blue-700">
             Sign up
           </Link>
         </p>
 
         <p className="mt-4 text-center">
-          <Link href="/" className="text-gray-500 hover:text-gray-700 text-sm">
+          <Link href="/" className="text-sm text-gray-500 hover:text-gray-700">
             ← Back to Home
           </Link>
         </p>
       </div>
     </div>
-  );
+  )
 }
